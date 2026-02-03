@@ -1,14 +1,22 @@
 
 
+compress
 magick mogrify -path ./compressed -colors 16 -depth 8 -quality 95 -strip *.png
+
+crop
+magick mogrify -fuzz 50% -trim +repage *.png
+
+transparent
 mogrify -fuzz 10% -transparent white *.png
 
 
+black
+magick C-or-sharp.png -background None -channel RGB -black-threshold 45% +channel PNG32:output.png
 
 
+&& magick mogrify -background black -alpha Shape -channel A -negate -sigmoidal-contrast 65,65% +channel *.png
 
 
-REMOTE_URL=$(git remote get-url origin | sed 's/\.git$//')
-BRANCH=$(git branch --show-current)
+magick mogrify -colors 16 -depth 8 -quality 95 -strip *.png && magick mogrify -fuzz 60% -trim +repage *.png && magick mogrify -background black -alpha Shape -channel A -negate -sigmoidal-contrast 65,65% +channel *.png
 
-git ls-files | xargs -I {} echo "${REMOTE_URL}/blob/${BRANCH}/{}"
+
