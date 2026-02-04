@@ -1,13 +1,13 @@
 
 
 compress
-magick mogrify -path ./compressed -colors 16 -depth 8 -quality 95 -strip *.png
+magick mogrify -colors 16 -depth 8 -quality 95 -strip *.png
 
 crop
-magick mogrify -fuzz 50% -trim +repage *.png
+magick mogrify -fuzz 60% -trim +repage *.png
 
 transparent
-magick mogrify -fuzz 10% -transparent white *.png
+magick mogrify -background black -alpha Shape -channel A -negate -sigmoidal-contrast 65,65% +channel *.png
 
 
 black
